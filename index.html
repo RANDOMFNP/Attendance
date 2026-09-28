@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance System</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" href="/Attendance-logo.png">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 40px;
+            background: #f4f4f9;
+        }
+
+        .layout-container {
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            align-items: flex-start;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            min-width: 320px;
+            height: auto;
+        }
+
+        .flex-grow {
+            flex-grow: 1;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .date-group input, .grade-group input {
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #007acc;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #005999;
+        }
+
+        .clearScreen {
+            margin-bottom: 15px;
+        }
+
+        #clearScreen {
+            background: #dc3545;
+            width: 100%;
+        }
+
+        #clearScreen:hover {
+            background: #c82333;
+        }
+
+        .csvDownload {
+            margin-bottom: 15px;
+        }
+
+        #csvBtn {
+            background: #28a745;
+            width: 100%;
+        }
+        #csvBtn:hover {
+            background: #218838;
+        }
+
+        #saveBtn {
+            width: 100%;
+        }
+
+        ul {
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout-container">
+
+    <div class="card">
+        <h2>Add Attendance Record</h2>
+        <div class="date-group">
+            <label for="yearToday">Year</label>
+            <input type="text" id="yearToday" value="2026">
+            <label for="monthToday">Month</label>
+            <input type="text" id="monthToday" value="09">
+            <label for="dayToday">Day</label>
+            <input type="text" id="dayToday" value="25">
+        </div>
+        <div class="grade-group">
+            <label for="gradeToday">Grade</label>
+            <input type="text" id="gradeToday" value="6">
+        </div>
+        <div class="form-group">
+            <label for="studentName">Student Full Name</label>
+            <input type="text" id="studentName" placeholder="e.g. John Smith">
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="isPresent"> Present Today
+            </label>
+        </div>
+        <div class="csvDownload">
+            <button id="csvBtn">Download CSV</button>
+        </div>
+        <div class="clearScreen">
+            <button id="clearScreen">Clear Screen</button>
+        </div>
+
+        <button id="saveBtn">Save to DB</button>
+        <p id="status"></p>
+    </div>
+
+    <div class="card flex-grow">
+        <h2>Database Records</h2>
+        <button id="viewBtn">Refresh / View DB</button>
+        <ul id="recordList"></ul>
+    </div>
+
+</div>
+
+<script src="attendance_web.js"></script>
+<script src="app.js"></script>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('Service Worker registered successfully', reg))
+                .catch(err => console.error('Service Worker registration failed:', err));
+        });
+    }
+</script>
+</body>
+</html>
